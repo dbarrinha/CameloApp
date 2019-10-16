@@ -31,9 +31,10 @@ export default function Sugestoes() {
                 <Title>Sugestões para você</Title>
             </View>
             <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal
                 data={sugestoes}
-                keyExtractor={item => item.nome+""}
+                keyExtractor={item => item.nome + ""}
                 extraData={sugestoes}
                 renderItem={(item) => renderSugestao(item)}
             />
