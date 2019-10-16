@@ -103,7 +103,7 @@ export default Home = () => {
             paddingVertical: 1,
             paddingHorizontal: 10,
             borderRadius: 4,
-            zIndex: 60
+            backgroundColor: 'white'
           }}>
             <Icon name="md-search" size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
             <TextInput
