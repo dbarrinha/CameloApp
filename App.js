@@ -41,8 +41,8 @@ class AuthLoadingScreen extends React.Component {
 }
 
 const HomeStack = createNativeStackNavigator({
-  Details: Details,
   Home: Home,
+  Details: Details,
 },
   {
     headerMode: 'none',

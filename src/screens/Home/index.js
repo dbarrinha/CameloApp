@@ -7,6 +7,7 @@ import { useNavigation } from 'react-navigation-hooks';
 import { Card, CardInfo, Description, TextFooter, Thumb, Title } from './styles';
 import Sugestoes from './Sugestoes';
 import Header from './Header';
+import { SafeAreaView } from 'react-navigation';
 const {
   Value,
   cond,
@@ -51,9 +52,9 @@ export default Home = () => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.colorBackground, paddingVertical: 5 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground }}>
       <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
-      <Header teste="fsdfsdfs" />
+      <Header />
       <Sugestoes />
       <View style={{ margin: 5 }}>
         <Title>Mais produtos</Title>
@@ -65,11 +66,7 @@ export default Home = () => {
         renderItem={(item) => renderCard(item)}
         showsHorizontalScrollIndicator={false}
       />
-      
-      {/*<View style={{width: 100, height: 100, position: 'absolute', backgroundColor: 'red', bottom: -80}}>
-
-  </View> */}
-    </View>
+    </SafeAreaView>
   );
 
 }
