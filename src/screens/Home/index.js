@@ -197,14 +197,14 @@ export default Home = () => {
         
         <View style={{flex: 2}}>
           <Animated.Image
-            source={ activeImage? require("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB") : null}
+            source={ activeImage? require("assets/bg.jpg") : null}
           >
 
           </Animated.Image>
         </View>
 
         <View style={{flex: 1}}>
-
+        
         </View>
       </View>
     </SafeAreaView>
