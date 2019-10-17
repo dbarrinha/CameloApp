@@ -33,7 +33,7 @@ export const Separator = styled.View`
 `;
 
 export const Thumb = styled.Image.attrs(props => ({
-    source: props.source,
+    source: props.source
 }))`
     width: ${width / 4};
     height:${width / 4};

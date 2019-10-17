@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Dimensions,Image, StyleSheet } from 'react-native';
+import { View, Text, Dimensions,Image, StyleSheet ,SafeAreaView} from 'react-native';
 import { colors } from 'config/colors';
 import {
     Thumb,
@@ -14,9 +14,9 @@ const { height, width } = Dimensions.get("window");
 export default function Details() {
 
     return (
-        <View style={{ flex: 1, backgroundColor: colors.colorBackground, paddingVertical: 5 }} >
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground, paddingVertical: 5 }} >
            
-        </View>
+        </SafeAreaView>
     );
 }
 

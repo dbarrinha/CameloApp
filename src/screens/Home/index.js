@@ -1,6 +1,6 @@
 import { colors } from 'config/colors';
-import React from 'react';
-import { TouchableOpacity, View, Platform, Dimensions, StatusBar, TextInput, Text } from 'react-native';
+import React,{useState} from 'react';
+import { TouchableWithoutFeedback, View, Platform, Dimensions, StatusBar, TextInput, Text } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useNavigation } from 'react-navigation-hooks';
@@ -24,6 +24,8 @@ const { height, width } = Dimensions.get("window");
 
 export default Home = () => {
   const { navigate } = useNavigation();
+  var allImages = {}
+  const { activeImage, setActiveImage} = useState(null)
   var scrollY = new Value(0)
 
   var startHeaderHeight = 80
@@ -39,7 +41,7 @@ export default Home = () => {
   })
 
   let animatedHeaderOpacity = interpolate(scrollY, {
-    inputRange:  [0, 50],
+    inputRange: [0, 50],
     outputRange: [1, 0],
     extrapolate: Extrapolate.CLAMP
   })
@@ -51,33 +53,38 @@ export default Home = () => {
   })
 
   let produtos = [
-    { nome: "Notebook intel i5", descricao: "produto novo" },
-    { nome: "Moto g5plus", descricao: "na caixa" },
-    { nome: "Iphone 8 plus", descricao: "Acompanha carregador" },
-    { nome: "Notebook intel i5", descricao: "produto novo" },
-    { nome: "Moto g5plus", descricao: "na caixa" },
-    { nome: "Iphone 8 plus", descricao: "Acompanha carregador" },
+    { id: 1, nome: "Notebook intel i5", descricao: "produto novo" },
+    { id: 2, nome: "Moto g5plus", descricao: "na caixa" },
+    { id: 3, nome: "Iphone 8 plus", descricao: "Acompanha carregador" },
+    { id: 4, nome: "Notebook intel i5", descricao: "produto novo" },
   ]
 
-  const renderCard = (item) => {
+  const openImage=(index)=>{
+    console.log(index)
+  }
+
+  const renderCard = (item,index) => {
     return (
-      <Card >
-        <Thumb
-          source={require('assets/imgs/livros.jpeg')}
-        />
-        <TouchableOpacity onPress={() => { navigate("Details") }}>
-          <CardInfo>
-            <Title>{item.item.nome}</Title>
-            <Description>
-              {item.item.descricao}
-            </Description>
-            <Title>R$ 500</Title>
-            <TextFooter>
-              30 setembro 13:10, Centro
+      <TouchableWithoutFeedback key={item.id} onPress={() => { openImage(index) }}>
+        <Animated.View>
+          <Card  >
+            <Thumb
+              ref={image => allImages[index] = image}
+              source={require('assets/imgs/livros.jpeg')}
+            />
+            <CardInfo>
+              <Title>{item.nome}</Title>
+              <Description>
+                {item.descricao}
+              </Description>
+              <Title>R$ 500</Title>
+              <TextFooter>
+                30 setembro 13:10, Centro
           </TextFooter>
-          </CardInfo>
-        </TouchableOpacity>
-      </Card>
+            </CardInfo>
+          </Card>
+        </Animated.View>
+      </TouchableWithoutFeedback>
     )
   }
 
@@ -149,7 +156,7 @@ export default Home = () => {
         </Animated.View>
       </Animated.View>
       <ScrollView
-        style={{marginTop: 5}}
+        style={{ marginTop: 5 }}
         scrollEventThrottle={16}
         onScroll={(e) => scrollY.setValue(e.nativeEvent.contentOffset.y)}
       >
@@ -157,13 +164,12 @@ export default Home = () => {
         <View style={{ margin: 5 }}>
           <Title>Mais produtos</Title>
         </View>
-        <FlatList
-          data={produtos}
-          keyExtractor={item => item.nome + ""}
-          extraData={produtos}
-          renderItem={(item) => renderCard(item)}
-          showsVerticalScrollIndicator={false}
-        />
+
+        {produtos.map((item, index) => {
+
+          return renderCard(item,index)
+        })}
+
       </ScrollView>
     </SafeAreaView>
   );

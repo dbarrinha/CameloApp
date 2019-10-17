@@ -5,7 +5,8 @@ import {
   View,
   Dimensions,
   TouchableWithoutFeedback,
-  TextInput
+  TextInput,
+  SafeAreaView
 } from 'react-native';
 import SVG, { ClipPath, Circle, Image } from 'react-native-svg'
 
@@ -81,7 +82,7 @@ export default Login = () => {
 
   
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', justifyContent: 'flex-end' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white', justifyContent: 'flex-end' }}>
       <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ translateY: bgY }], flex: 1 }]}>
         <SVG height={height + 100} width={width}>
           <ClipPath id='clip'>
@@ -157,7 +158,7 @@ export default Login = () => {
           </Animated.View>
         </Animated.View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
