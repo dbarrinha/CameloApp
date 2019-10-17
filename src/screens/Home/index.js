@@ -1,6 +1,10 @@
 import { colors } from 'config/colors';
-import React,{useState} from 'react';
-import { TouchableWithoutFeedback, View, Platform, Dimensions, StatusBar, TextInput, Text } from 'react-native';
+import React, { useState } from 'react';
+import {
+  TouchableWithoutFeedback,
+  View, Platform, Dimensions,
+  StatusBar, TextInput, Text, StyleSheet
+} from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import { useNavigation } from 'react-navigation-hooks';
@@ -18,15 +22,20 @@ const {
   interpolate,
   Extrapolate,
   concat,
-  event
+  event,
 } = Animated
 const { height, width } = Dimensions.get("window");
 
 export default Home = () => {
   const { navigate } = useNavigation();
   var allImages = {}
-  const { activeImage, setActiveImage} = useState(null)
+  var oldPosition = {}
+  const [ activeImage, setActiveImage ] = useState(null)
   var scrollY = new Value(0)
+  var positionX = new Value(0)
+  var positionY = new Value(0)
+  var dimensionX = new Value(0)
+  var dimensionY = new Value(0)
 
   var startHeaderHeight = 80
   var endHeaderHeight = 50
@@ -53,24 +62,36 @@ export default Home = () => {
   })
 
   let produtos = [
-    { id: 1, nome: "Notebook intel i5", descricao: "produto novo" },
-    { id: 2, nome: "Moto g5plus", descricao: "na caixa" },
-    { id: 3, nome: "Iphone 8 plus", descricao: "Acompanha carregador" },
-    { id: 4, nome: "Notebook intel i5", descricao: "produto novo" },
+    { id: 1, nome: "Notebook intel i5", descricao: "produto novo", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP"},
+    { id: 2, nome: "Moto g5plus", descricao: "na caixa", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP"},
+    { id: 3, nome: "Iphone 8 plus", descricao: "Acompanha carregador", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
+    { id: 4, nome: "Notebook intel i5", descricao: "produto novo", src: "https://facebook.github.io/react-native/img/tiny_logo.png"},
   ]
 
-  const openImage=(index)=>{
-    console.log(index)
+  const openImage = (index) => {
+    allImages[index].measure((x, y, width, height, pageX, pageY) => {
+      oldPosition.x = pageX
+      oldPosition.y = pageY
+      oldPosition.width = width
+      oldPosition.height = height
+
+      positionX.setValue(pageX)
+      positionY.setValue(pageY)
+      dimensionX.setValue(width)
+      dimensionY.setValue(height)
+     console.log(produtos[index])
+      setActiveImage(produtos[index])
+    })
   }
 
-  const renderCard = (item,index) => {
+  const renderCard = (item, index) => {
     return (
       <TouchableWithoutFeedback key={item.id} onPress={() => { openImage(index) }}>
         <Animated.View>
           <Card  >
             <Thumb
               ref={image => allImages[index] = image}
-              source={require('assets/imgs/livros.jpeg')}
+              source={{uri: item.src}}
             />
             <CardInfo>
               <Title>{item.nome}</Title>
@@ -166,11 +187,26 @@ export default Home = () => {
         </View>
 
         {produtos.map((item, index) => {
-
-          return renderCard(item,index)
+          return renderCard(item, index)
         })}
 
       </ScrollView>
+      <View style={StyleSheet.absoluteFill}
+        pointerEvents={activeImage ? "auto" : "none"}
+      >
+        
+        <View style={{flex: 2}}>
+          <Animated.Image
+            source={ activeImage? require("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB") : null}
+          >
+
+          </Animated.Image>
+        </View>
+
+        <View style={{flex: 1}}>
+
+        </View>
+      </View>
     </SafeAreaView>
   );
 
