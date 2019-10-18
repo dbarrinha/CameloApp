@@ -1,18 +1,18 @@
 import { colors } from 'config/colors';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   TouchableWithoutFeedback,
   View, Platform, Dimensions,
-  StatusBar, TextInput, Text, StyleSheet
+  StatusBar, TextInput, Text, StyleSheet, Animated
 } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
+import Reaniamted from 'react-native-reanimated';
 import { useNavigation } from 'react-navigation-hooks';
 import { Card, CardInfo, Description, TextFooter, Thumb, Title } from './styles';
 import Sugestoes from './Sugestoes';
-import Header from './Header';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { runTiming } from 'utils/animated'
 const {
   Value,
   cond,
@@ -23,19 +23,21 @@ const {
   Extrapolate,
   concat,
   event,
-} = Animated
+} = Reaniamted
 const { height, width } = Dimensions.get("window");
 
 export default Home = () => {
   const { navigate } = useNavigation();
   var allImages = {}
   var oldPosition = {}
-  const [ activeImage, setActiveImage ] = useState(null)
+  const [activeImage, setActiveImage] = useState(null)
+  const [positionX, setPositionX] = useState(new Value(0))
+  const [positionY, setPositionY] = useState(new Value(0))
+  const [dimensionX, setDimensionX] = useState(new Value(0))
+  const [dimensionY, setDimensionY] = useState(new Value(0))
+  const refContainer = useRef(null);
+
   var scrollY = new Value(0)
-  var positionX = new Value(0)
-  var positionY = new Value(0)
-  var dimensionX = new Value(0)
-  var dimensionY = new Value(0)
 
   var startHeaderHeight = 80
   var endHeaderHeight = 50
@@ -61,11 +63,33 @@ export default Home = () => {
     extrapolate: Extrapolate.CLAMP
   })
 
+  useEffect(() => {
+    refContainer.current.measure((dX,dY,dWidth,dHeight,dPageX,dPageY)=>{
+        Animated.parallel([
+          //Reaniamted.timing(positionX,{toValue: dPageX,duration: 300})
+          setPositionX(dPageX)
+        ])
+        Animated.parallel([
+          //Reaniamted.timing(positionY,{toValue: dPageY,duration: 300})
+          setPositionY(dPageY)
+        ])
+        Animated.parallel([
+          //Reaniamted.timing(positionX,{toValue: dPageX,duration: 300})
+          setDimensionY(dHeight)
+        ])
+        Animated.parallel([
+          //Reaniamted.timing(positionY,{toValue: dPageY,duration: 300})
+          setDimensionX(dWidth)
+        ])
+    })
+  }, [activeImage]);
+
+
   let produtos = [
-    { id: 1, nome: "Notebook intel i5", descricao: "produto novo", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP"},
-    { id: 2, nome: "Moto g5plus", descricao: "na caixa", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP"},
+    { id: 1, nome: "Notebook intel i5", descricao: "produto novo", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
+    { id: 2, nome: "Moto g5plus", descricao: "na caixa", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
     { id: 3, nome: "Iphone 8 plus", descricao: "Acompanha carregador", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
-    { id: 4, nome: "Notebook intel i5", descricao: "produto novo", src: "https://facebook.github.io/react-native/img/tiny_logo.png"},
+    { id: 4, nome: "Notebook intel i5", descricao: "produto novo", src: "https://facebook.github.io/react-native/img/tiny_logo.png" },
   ]
 
   const openImage = (index) => {
@@ -75,11 +99,11 @@ export default Home = () => {
       oldPosition.width = width
       oldPosition.height = height
 
-      positionX.setValue(pageX)
-      positionY.setValue(pageY)
-      dimensionX.setValue(width)
-      dimensionY.setValue(height)
-     console.log(produtos[index])
+      setPositionX(pageX)
+      setPositionY(pageY)
+      setDimensionX(width)
+      setDimensionY(height)
+
       setActiveImage(produtos[index])
     })
   }
@@ -91,7 +115,7 @@ export default Home = () => {
           <Card  >
             <Thumb
               ref={image => allImages[index] = image}
-              source={{uri: item.src}}
+              source={{ uri: item.src }}
             />
             <CardInfo>
               <Title>{item.nome}</Title>
@@ -110,9 +134,10 @@ export default Home = () => {
   }
 
   return (
+
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground }}>
       <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
-      <Animated.View style={{
+      <Reaniamted.View style={{
         height: animatedHeaderHeight,
         borderBottomWidth: 1,
         borderBottomColor: '#dddddd',
@@ -144,7 +169,7 @@ export default Home = () => {
           <Icon name="md-funnel" size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
         </View>
 
-        <Animated.View style={{
+        <Reaniamted.View style={{
           flexDirection: 'row',
           marginHorizontal: 20,
           position: 'relative',
@@ -174,8 +199,8 @@ export default Home = () => {
           }}>
             <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Celulares</Text>
           </View>
-        </Animated.View>
-      </Animated.View>
+        </Reaniamted.View>
+      </Reaniamted.View>
       <ScrollView
         style={{ marginTop: 5 }}
         scrollEventThrottle={16}
@@ -194,17 +219,18 @@ export default Home = () => {
       <View style={StyleSheet.absoluteFill}
         pointerEvents={activeImage ? "auto" : "none"}
       >
-        
-        <View style={{flex: 2}}>
-          <Animated.Image
-            source={ activeImage? require("assets/bg.jpg") : null}
+
+        <View style={{ flex: 1, borderWidth: 1 }} ref={refContainer}>
+          <Reaniamted.Image
+            style={{ width: dimensionX, height: dimensionY, resizeMode: 'cover', top: positionY, left: positionX }}
+            source={activeImage ? { uri: activeImage.src } : null}
           >
 
-          </Animated.Image>
+          </Reaniamted.Image>
         </View>
 
-        <View style={{flex: 1}}>
-        
+        <View style={{ flex: 1 }}>
+
         </View>
       </View>
     </SafeAreaView>
