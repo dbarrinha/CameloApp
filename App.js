@@ -25,7 +25,7 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const user = await AsyncStorage.getItem('user:CameloApp')
     if (user === null) {
-      this.props.navigation.navigate('HomeStack')
+      this.props.navigation.navigate('AuthStack')
     } else {
       console.log("teste")
     }

@@ -70,7 +70,7 @@ export default class Home extends Component {
     this.positionY = new Value(0);
     this.dimensionX = new Value(0);
     this.dimensionY = new Value(0);
-    this.animation = new Value(0)
+    this.animation = new Value(0);
   }
 
   handleAnimation = (width, height, pageX, pageY) => {
@@ -81,11 +81,11 @@ export default class Home extends Component {
 
     this.refContainer.current.measure((dX, dY, dWidth, dHeight, dPageX, dPageY) => {
       Animated.parallel([
-        Reaniamted.timing(this.positionX, { toValue: dPageX, duration: 300, easing: Easing.bounce }),
-        Reaniamted.timing(this.positionY, { toValue: dPageY, duration: 300, easing: Easing.bounce }),
-        Reaniamted.timing(this.dimensionX, { toValue: dWidth, duration: 300, easing: Easing.bounce }),
-        Reaniamted.timing(this.dimensionY, { toValue: dHeight, duration: 300, easing: Easing.bounce }),
-        Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.bounce })
+        Reaniamted.timing(this.positionX, { toValue: dPageX, duration: 300, easing: Easing.in }),
+        Reaniamted.timing(this.positionY, { toValue: dPageY, duration: 300, easing: Easing.in }),
+        Reaniamted.timing(this.dimensionX, { toValue: dWidth, duration: 300, easing: Easing.in }),
+        Reaniamted.timing(this.dimensionY, { toValue: dHeight, duration: 300, easing: Easing.in }),
+        Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.back() })
       ]).start()
     })
   }
@@ -138,6 +138,22 @@ export default class Home extends Component {
       </TouchableWithoutFeedback>
     )
   }
+
+  closeImage = () => {
+
+    Animated.parallel([
+      Reaniamted.timing(this.positionX, { toValue: this.oldPosition.x, duration: 350, easing: Easing.in }),
+      Reaniamted.timing(this.positionY, { toValue: this.oldPosition.y, duration: 350, easing: Easing.in }),
+      Reaniamted.timing(this.dimensionX, { toValue: this.oldPosition.width, duration: 350, easing: Easing.in }),
+      Reaniamted.timing(this.dimensionY, { toValue: this.oldPosition.height, duration: 350, easing: Easing.in }),
+      Reaniamted.timing(this.animation, { toValue: 0, duration: 300, easing: Easing.back() })
+    ]).start(() => {
+      this.setState({
+        activeImage: null
+      })
+    })
+  }
+
   render() {
 
     const activeStyle = {
@@ -163,9 +179,9 @@ export default class Home extends Component {
         translateY: animatedContentY
       }]
     }
-
+    console.log(this.animation)
     const crossStyle = {
-      opacity: animatedContentOpacity
+      opacity: this.animation
     }
 
     return (
@@ -260,12 +276,25 @@ export default class Home extends Component {
               source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
             >
             </Reaniamted.Image>
-            <TouchableWithoutFeedback >
-              <Animated.View style={[{  
-                position: 'absolute', 
-                top: 30, right: 30},{opacity: this.state.activeImage ? 1: 0}]}>
-                <Text style={{ fontSize: 25, fontWeight: '700'}}>X</Text>
-              </Animated.View>
+            <TouchableWithoutFeedback  onPress={() => this.closeImage()}>
+
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, left: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name="md-arrow-round-back" size={35} />
+                </Reaniamted.View>
+                
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback  onPress={() =>alert("Campo maior Viadão")}>
+
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, right: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name="md-heart" size={35} />
+                </Reaniamted.View>
+                
             </TouchableWithoutFeedback>
           </View>
 
