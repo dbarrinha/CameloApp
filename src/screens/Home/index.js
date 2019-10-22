@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   TouchableWithoutFeedback,
   View, Platform, Dimensions,
-  StatusBar, TextInput, Text, StyleSheet, Animated
+  StatusBar, TextInput, Text, StyleSheet, Animated, BackHandler
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Reaniamted, { Easing } from 'react-native-reanimated';
@@ -31,6 +31,10 @@ export default class Home extends Component {
         { id: 2, nome: "Moto g5plus", descricao: "na caixa", src: "https://rollingstone.uol.com.br/media/_versions/coringa_joaquin_phoenix_divulgacao_widelg.jpg" },
         { id: 3, nome: "Iphone 8 plus", descricao: "Acompanha carregador", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
         { id: 4, nome: "Notebook intel i5", descricao: "produto novo", src: "https://facebook.github.io/react-native/img/tiny_logo.png" },
+        { id: 5, nome: "Notebook intel i5", descricao: "produto novo", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
+        { id: 6, nome: "Moto g5plus", descricao: "na caixa", src: "https://rollingstone.uol.com.br/media/_versions/coringa_joaquin_phoenix_divulgacao_widelg.jpg" },
+        { id: 7, nome: "Iphone 8 plus", descricao: "Acompanha carregador", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwwh0UeN9P0KJCH8fLabSSupqusmiSxfGGDSMZR3OoU-vWvgnP" },
+        { id: 8, nome: "Notebook intel i5", descricao: "produto novo", src: "https://facebook.github.io/react-native/img/tiny_logo.png" },
       ]
     }
     this.refContainer = React.createRef();
@@ -61,6 +65,23 @@ export default class Home extends Component {
       extrapolate: Extrapolate.CLAMP
     })
   }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress',()=>{
+      if(this.state.activeImage){
+        this.closeImage()
+        return true;
+      }else{
+        return true;
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress')
+  }
+
+  
 
   componentWillMount = () => {
     this.allImages = {}
@@ -179,7 +200,6 @@ export default class Home extends Component {
         translateY: animatedContentY
       }]
     }
-    console.log(this.animation)
     const crossStyle = {
       opacity: this.animation
     }
@@ -276,25 +296,25 @@ export default class Home extends Component {
               source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
             >
             </Reaniamted.Image>
-            <TouchableWithoutFeedback  onPress={() => this.closeImage()}>
+            <TouchableWithoutFeedback onPress={() => this.closeImage()}>
 
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, left: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name="md-arrow-round-back" size={35} />
-                </Reaniamted.View>
-                
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, left: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name="md-arrow-round-back" size={35} />
+              </Reaniamted.View>
+
             </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback  onPress={() =>alert("Campo maior Viadão")}>
+            <TouchableWithoutFeedback onPress={() => alert("Campo maior Viadão")}>
 
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, right: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name="md-heart" size={35} />
-                </Reaniamted.View>
-                
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, right: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name="md-heart" size={35} />
+              </Reaniamted.View>
+
             </TouchableWithoutFeedback>
           </View>
 

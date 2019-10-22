@@ -66,7 +66,6 @@ export default Login = () => {
   })
 
   const goToHome = ()=>{
-    console.log("teste")
     navigate("Home")
   }
 
