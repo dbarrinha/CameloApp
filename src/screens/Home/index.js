@@ -206,7 +206,7 @@ export default class Home extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground }}>
-        <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
+        <StatusBar  backgroundColor={colors.colorBackground} barStyle="dark-content" />
         <Reaniamted.View style={{
           height: this.animatedHeaderHeight,
           borderBottomWidth: 1,
@@ -228,7 +228,7 @@ export default class Home extends Component {
               borderRadius: 4,
               backgroundColor: 'white'
             }}>
-              <Icon name="md-search" size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
+              <Icon name={Platform.OS === "android"? "md-search" : "ios-search"} size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
               <TextInput
                 placeholder="Tente por Carregador Samsung"
                 placeholderTextColor="grey"
@@ -236,7 +236,7 @@ export default class Home extends Component {
                 style={{ backgroundColor: 'white', width: width - 150 }}
               />
             </View>
-            <Icon name="md-funnel" size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
+            <Icon name={Platform.OS === "android"? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
           </View>
 
           <Reaniamted.View style={{
@@ -302,7 +302,7 @@ export default class Home extends Component {
                 position: 'absolute',
                 top: 30, left: 30
               }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name="md-arrow-round-back" size={35} />
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android"? "md-arrow-round-back":"ios-arrow-back"} size={25} />
               </Reaniamted.View>
 
             </TouchableWithoutFeedback>
@@ -312,9 +312,8 @@ export default class Home extends Component {
                 position: 'absolute',
                 top: 30, right: 30
               }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name="md-heart" size={35} />
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android"? "md-heart":"ios-heart"} size={25} />
               </Reaniamted.View>
-
             </TouchableWithoutFeedback>
           </View>
 
