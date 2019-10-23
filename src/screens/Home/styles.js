@@ -52,6 +52,7 @@ export const Description = styled.Text`
     font-size: 13px;
     color: ${colors.colorFont};
     font-weight: bold;
+    text-align: justify;
 `;
 
 export const TextFooter = styled.Text`

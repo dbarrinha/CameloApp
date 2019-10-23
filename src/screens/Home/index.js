@@ -67,11 +67,11 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress',()=>{
-      if(this.state.activeImage){
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      if (this.state.activeImage) {
         this.closeImage()
         return true;
-      }else{
+      } else {
         return true;
       }
     });
@@ -81,7 +81,7 @@ export default class Home extends Component {
     BackHandler.removeEventListener('hardwareBackPress')
   }
 
-  
+
 
   componentWillMount = () => {
     this.allImages = {}
@@ -206,7 +206,7 @@ export default class Home extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground }}>
-        <StatusBar  backgroundColor={colors.colorBackground} barStyle="dark-content" />
+        <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
         <Reaniamted.View style={{
           height: this.animatedHeaderHeight,
           borderBottomWidth: 1,
@@ -228,7 +228,7 @@ export default class Home extends Component {
               borderRadius: 4,
               backgroundColor: 'white'
             }}>
-              <Icon name={Platform.OS === "android"? "md-search" : "ios-search"} size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
+              <Icon name={Platform.OS === "android" ? "md-search" : "ios-search"} size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
               <TextInput
                 placeholder="Tente por Carregador Samsung"
                 placeholderTextColor="grey"
@@ -236,7 +236,7 @@ export default class Home extends Component {
                 style={{ backgroundColor: 'white', width: width - 150 }}
               />
             </View>
-            <Icon name={Platform.OS === "android"? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
+            <Icon name={Platform.OS === "android" ? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
           </View>
 
           <Reaniamted.View style={{
@@ -302,7 +302,7 @@ export default class Home extends Component {
                 position: 'absolute',
                 top: 30, left: 30
               }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android"? "md-arrow-round-back":"ios-arrow-back"} size={25} />
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
               </Reaniamted.View>
 
             </TouchableWithoutFeedback>
@@ -312,14 +312,21 @@ export default class Home extends Component {
                 position: 'absolute',
                 top: 30, right: 30
               }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android"? "md-heart":"ios-heart"} size={25} />
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
               </Reaniamted.View>
             </TouchableWithoutFeedback>
           </View>
 
-          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20, paddingTop: 50 }, contentStyle]}>
-            <Text style={{ fontWeight: '700', fontSize: 25, paddingBottom: 10 }}>{this.state.activeImage ? this.state.activeImage.nome : ""}</Text>
-            <Text>Sit sit laborum commodo non nisi fugiat consectetur veniam. Anim excepteur ipsum sit ea sit aliquip ex cillum consectetur officia irure. Id deserunt aute mollit Lorem laboris eiusmod ipsum mollit et. Cillum ut elit officia non pariatur cupidatat eu sit et officia velit et. Adipisicing incididunt qui aliqua aliqua voluptate aute minim qui labore consequat aliquip est dolor ea. Cupidatat tempor cupidatat consequat fugiat pariatur eiusmod ipsum ad nulla laboris laboris labore non adipisicing.</Text>
+          <Reaniamted.View style={[{ flex: 2, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
+            <ScrollView>
+              <Title>{this.state.activeImage ? this.state.activeImage.nome : ""} - R$ 50</Title>
+              <Text style={{color: colors.colorFont, fontWeight: '500', marginVertical: 10}}>Descrição</Text>
+              <Description>Sit sit laborum commodo non nisi fugiat consectetur veniam. Anim excepteur ipsum sit ea sit aliquip ex cillum consectetur officia irure. Id deserunt aute mollit Lorem laboris eiusmod ipsum mollit et. Cillum ut elit officia non pariatur cupidatat eu sit et officia velit et. </Description>
+              <Text style={{color: colors.colorFont, fontWeight: '500', marginVertical: 10}}>Informações da Loja</Text>
+              <View>
+
+              </View>
+            </ScrollView>
           </Reaniamted.View>
         </View>
       </SafeAreaView>
