@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
 const { height, width } = Dimensions.get("window");
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Title, Description ,Card} from './styles';
 
 export default function Sugestoes() {
     let horarios = [
@@ -23,14 +24,14 @@ export default function Sugestoes() {
         )
     }
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-            <Icon size={20} style={{marginRight: 5}} name="md-clock" />
-            <Text style={{fontWeight: '500', fontSize: 16}}>Horários</Text>
+        <Card style={{height: null, alignItems: 'flex-start'}}>
+            <Icon size={25} style={{marginRight: 5, width:30 }} name="md-clock" />
+            <Text style={{fontWeight: '700', fontSize: 16}}>Horários</Text>
             <View style={{ marginHorizontal: 10 }}>
                 {horarios.map((item, key) => {
                     return renderHorario(item)
                 })}
             </View>
-        </View>
+        </Card>
     );
 }

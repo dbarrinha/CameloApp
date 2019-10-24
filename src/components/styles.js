@@ -4,17 +4,14 @@ const { height, width } = Dimensions.get("window");
 import { colors } from 'config/colors'
 
 export const Card = styled.View`
-    width: ${width};
-    height:${width / 4};
+    flex: 1;
+    height: 40;
     flex-direction: row;
-    align-items: center;
-    margin-left:5px;
-    margin-right: 5px;
-    border-radius: 10px;
     background-color: #fff;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    elevation: 5px;
+    margin-top: 10;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
 `;
 
 export const Title = styled.Text`
