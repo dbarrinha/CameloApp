@@ -10,6 +10,7 @@ import Reaniamted, { Easing } from 'react-native-reanimated';
 import { useNavigation } from 'react-navigation-hooks';
 import { Card, CardInfo, Description, TextFooter, Thumb, Title } from './styles';
 import Sugestoes from './Sugestoes';
+import InfoLoja from '../../components/InfoLoja';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 const {
@@ -318,15 +319,7 @@ export default class Home extends Component {
           </View>
 
           <Reaniamted.View style={[{ flex: 2, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
-            <ScrollView>
-              <Title>{this.state.activeImage ? this.state.activeImage.nome : ""} - R$ 50</Title>
-              <Text style={{color: colors.colorFont, fontWeight: '500', marginVertical: 10}}>Descrição</Text>
-              <Description>Sit sit laborum commodo non nisi fugiat consectetur veniam. Anim excepteur ipsum sit ea sit aliquip ex cillum consectetur officia irure. Id deserunt aute mollit Lorem laboris eiusmod ipsum mollit et. Cillum ut elit officia non pariatur cupidatat eu sit et officia velit et. </Description>
-              <Text style={{color: colors.colorFont, fontWeight: '500', marginVertical: 10}}>Informações da Loja</Text>
-              <View>
-
-              </View>
-            </ScrollView>
+            <InfoLoja />
           </Reaniamted.View>
         </View>
       </SafeAreaView>

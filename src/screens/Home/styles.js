@@ -13,7 +13,7 @@ export const CardInfo = styled.View`
 `;
 
 export const Card = styled.View`
-    width: ${width};
+    flex: 1;
     height:${width / 4};
     flex-direction: row;
     align-items: center;
