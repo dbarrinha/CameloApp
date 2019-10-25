@@ -18,7 +18,7 @@ const {
   interpolate,
   Extrapolate,
 } = Reaniamted
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
 export default class Home extends Component {
 
@@ -41,6 +41,7 @@ export default class Home extends Component {
     this.refContainer = React.createRef();
 
     this.scrollY = new Value(0)
+    this.scrollYDetails = new Value(0)
 
     this.startHeaderHeight = 80
     this.endHeaderHeight = 50
@@ -62,6 +63,24 @@ export default class Home extends Component {
 
     this.animatedHeaderY = interpolate(this.scrollY, {
       inputRange: [0, 50],
+      outputRange: [10, -30],
+      extrapolate: Extrapolate.CLAMP
+    })
+
+    this.animatedHeaderHeightDetails = interpolate(this.scrollYDetails, {
+      inputRange: [0, 200],
+      outputRange: [0, 0],
+      extrapolate: Extrapolate.CLAMP
+    })
+
+    this.animatedHeaderOpacityDetails = interpolate(this.scrollYDetails, {
+      inputRange: [0, 200],
+      outputRange: [1, 0],
+      extrapolate: Extrapolate.CLAMP
+    })
+
+    this.animatedHeaderYDetails = interpolate(this.scrollYDetails, {
+      inputRange: [0, 200],
       outputRange: [10, -30],
       extrapolate: Extrapolate.CLAMP
     })
@@ -182,7 +201,12 @@ export default class Home extends Component {
       width: this.dimensionX,
       height: this.dimensionY,
       left: this.positionX,
-      top: this.positionY
+      top: this.positionY,
+      opacity: this.animatedHeaderOpacityDetails,
+      transform: [{
+        translateY: this.animatedHeaderYDetails
+      }]
+
     }
 
     const animatedContentY = this.animation.interpolate({
@@ -290,36 +314,40 @@ export default class Home extends Component {
         <View style={StyleSheet.absoluteFill}
           pointerEvents={this.state.activeImage ? "auto" : "none"}
         >
+          <Reaniamted.View style={{transform:[{translateY: this.animatedHeaderHeightDetails}] }}>
+            <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
+              <Reaniamted.Image
+                style={[{ resizeMode: 'cover' }, activeStyle]}
+                source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
+              >
+              </Reaniamted.Image>
+              <TouchableWithoutFeedback onPress={() => this.closeImage()}>
 
-          <View style={{ flex: 2, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
-            <Reaniamted.Image
-              style={[{ resizeMode: 'cover' }, activeStyle]}
-              source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
-            >
-            </Reaniamted.Image>
-            <TouchableWithoutFeedback onPress={() => this.closeImage()}>
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, left: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
+                </Reaniamted.View>
 
-              <Reaniamted.View style={[{
-                position: 'absolute',
-                top: 30, left: 30
-              }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
-              </Reaniamted.View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
 
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => alert("Campo maior Viadão")}>
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, right: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
+                </Reaniamted.View>
+              </TouchableWithoutFeedback>
+            </View>
+          </Reaniamted.View>
 
-              <Reaniamted.View style={[{
-                position: 'absolute',
-                top: 30, right: 30
-              }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
-              </Reaniamted.View>
-            </TouchableWithoutFeedback>
-          </View>
-
-          <Reaniamted.View style={[{ flex: 2, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
-            <InfoLoja />
+          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
+            <InfoLoja setscroll={val => {
+              this.scrollYDetails.setValue(val)
+              console.log(val)
+              }} />
           </Reaniamted.View>
         </View>
       </SafeAreaView>

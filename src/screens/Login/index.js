@@ -24,7 +24,6 @@ const {
   Extrapolate,
   concat
 } = Animated
-console.disableYellowBox = true;
 
 
 
