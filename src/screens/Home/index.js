@@ -10,9 +10,11 @@ import Reaniamted, { Easing } from 'react-native-reanimated';
 import { useNavigation } from 'react-navigation-hooks';
 import { Card, CardInfo, Description, TextFooter, Thumb, Title } from './styles';
 import Sugestoes from './Sugestoes';
+import Filtros from './Filtros';
 import InfoLoja from '../../components/InfoLoja';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
+import RBSheet from "react-native-raw-bottom-sheet";
 const {
   Value,
   interpolate,
@@ -202,10 +204,10 @@ export default class Home extends Component {
       height: this.dimensionY,
       left: this.positionX,
       top: this.positionY,
-      opacity: this.animatedHeaderOpacityDetails,
+      /*opacity: this.animatedHeaderOpacityDetails,
       transform: [{
         translateY: this.animatedHeaderYDetails
-      }]
+      }]*/
 
     }
 
@@ -261,7 +263,9 @@ export default class Home extends Component {
                 style={{ backgroundColor: 'white', width: width - 150 }}
               />
             </View>
-            <Icon name={Platform.OS === "android" ? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
+            <Icon onPress={() => {
+            this.RBSheet.open();
+          }} name={Platform.OS === "android" ? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
           </View>
 
           <Reaniamted.View style={{
@@ -314,42 +318,57 @@ export default class Home extends Component {
         <View style={StyleSheet.absoluteFill}
           pointerEvents={this.state.activeImage ? "auto" : "none"}
         >
-          <Reaniamted.View style={{transform:[{translateY: this.animatedHeaderHeightDetails}] }}>
-            <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
-              <Reaniamted.Image
-                style={[{ resizeMode: 'cover' }, activeStyle]}
-                source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
-              >
-              </Reaniamted.Image>
-              <TouchableWithoutFeedback onPress={() => this.closeImage()}>
+          <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
+            <Reaniamted.Image
+              style={[{ resizeMode: 'cover' }, activeStyle]}
+              source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
+            >
+            </Reaniamted.Image>
+            <TouchableWithoutFeedback onPress={() => this.closeImage()}>
 
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, left: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
-                </Reaniamted.View>
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, left: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
+              </Reaniamted.View>
 
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
-
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, right: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
-                </Reaniamted.View>
-              </TouchableWithoutFeedback>
-            </View>
-          </Reaniamted.View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, right: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
+              </Reaniamted.View>
+            </TouchableWithoutFeedback>
+          </View>
 
           <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
             <InfoLoja setscroll={val => {
               this.scrollYDetails.setValue(val)
               console.log(val)
-              }} />
+            }} />
           </Reaniamted.View>
         </View>
+        <RBSheet
+          ref={ref => {
+            this.RBSheet = ref;
+          }}
+          height={height/2}
+          duration={450}
+          animationType={"slide"}
+          customStyles={{
+            container: {
+              justifyContent: "center",
+              alignItems: "center",
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30
+            }
+          }}
+        >
+         <Filtros />
+        </RBSheet>
       </SafeAreaView>
     );
   }
