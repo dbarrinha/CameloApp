@@ -10,6 +10,7 @@ export default function InfoLoja(props) {
     return (
         <ScrollView
             scrollEventThrottle={16}
+            showsVerticalScrollIndicator={false}
             onScroll={(e) => props.setscroll(e.nativeEvent.contentOffset.y)}
         >
             <Title>Nome Produto - R$ 50</Title>

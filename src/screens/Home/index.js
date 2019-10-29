@@ -355,15 +355,14 @@ export default class Home extends Component {
           ref={ref => {
             this.RBSheet = ref;
           }}
-          height={height/2}
-          duration={450}
-          animationType={"slide"}
+          height={height}
+          duration={650}
+          animationType={"fade"}
+          closeOnDragDown={true}
           customStyles={{
             container: {
               justifyContent: "center",
-              alignItems: "center",
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30
+              alignItems: "center"
             }
           }}
         >
