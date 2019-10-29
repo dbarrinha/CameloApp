@@ -221,153 +221,158 @@ export default class Home extends Component {
       outputRange: [0, 1, 1]
     })
 
+    const animatedScreenOpacity = this.animation.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [1, 1, 0]
+    })
+
     const contentStyle = {
       opacity: animatedContentOpacity,
       transform: [{
         translateY: animatedContentY
       }]
     }
+
     const crossStyle = {
       opacity: this.animation
     }
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.colorBackground }}>
-        <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
-        <Reaniamted.View style={{
-          height: this.animatedHeaderHeight,
-          borderBottomWidth: 1,
-          borderBottomColor: '#dddddd',
-          backgroundColor: '#fff',
-          padding: 5,
-        }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <SafeAreaView style={[{ flex: 1, backgroundColor: colors.colorBackground }]}>
+        <Reaniamted.View  style={[{ flex: 1, opacity: animatedScreenOpacity }]}>
+          <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
+          <Reaniamted.View style={{
+            height: this.animatedHeaderHeight,
+            borderBottomWidth: 1,
+            borderBottomColor: '#dddddd',
+            backgroundColor: '#fff',
+            padding: 5,
+          }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
-            <View style={{
+              <View style={{
+                flexDirection: 'row',
+                marginHorizontal: 20,
+                elevation: 2,
+                shadowOffset: { width: 0, height: 0 },
+                shadowColor: 'black',
+                shadowOpacity: 0.2,
+                paddingVertical: 1,
+                paddingHorizontal: 10,
+                borderRadius: 4,
+                backgroundColor: 'white'
+              }}>
+                <Icon name={Platform.OS === "android" ? "md-search" : "ios-search"} size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
+                <TextInput
+                  placeholder="Tente por Carregador Samsung"
+                  placeholderTextColor="grey"
+                  underlineColorAndroid="transparent"
+                  style={{ backgroundColor: 'white', width: width - 150 }}
+                />
+              </View>
+              <Icon onPress={() => {
+                this.RBSheet.open();
+              }} name={Platform.OS === "android" ? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
+            </View>
+
+            <Reaniamted.View style={{
               flexDirection: 'row',
               marginHorizontal: 20,
-              elevation: 2,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor: 'black',
-              shadowOpacity: 0.2,
-              paddingVertical: 1,
-              paddingHorizontal: 10,
-              borderRadius: 4,
-              backgroundColor: 'white'
+              position: 'relative',
+              top: this.animatedHeaderY,
+              opacity: this.animatedHeaderOpacity
             }}>
-              <Icon name={Platform.OS === "android" ? "md-search" : "ios-search"} size={20} style={{ marginRight: 10, alignSelf: 'center' }} />
-              <TextInput
-                placeholder="Tente por Carregador Samsung"
-                placeholderTextColor="grey"
-                underlineColorAndroid="transparent"
-                style={{ backgroundColor: 'white', width: width - 150 }}
-              />
-            </View>
-            <Icon onPress={() => {
-            this.RBSheet.open();
-          }} name={Platform.OS === "android" ? "md-funnel" : "ios-funnel"} size={25} style={{ marginRight: 10, alignSelf: 'center' }} />
-          </View>
-
-          <Reaniamted.View style={{
-            flexDirection: 'row',
-            marginHorizontal: 20,
-            position: 'relative',
-            top: this.animatedHeaderY,
-            opacity: this.animatedHeaderOpacity
-          }}>
-            <View style={{
-              minHeight: 20,
-              minWidth: 60,
-              padding: 5,
-              backgroundColor: 'white',
-              borderColor: '#dddddd',
-              borderWidth: 1,
-              borderRadius: 2,
-              marginRight: 5
-            }}>
-              <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Hoje</Text>
-            </View>
-            <View style={{
-              minHeight: 20,
-              minWidth: 60,
-              padding: 5,
-              backgroundColor: 'white',
-              borderColor: '#dddddd',
-              borderWidth: 1,
-              borderRadius: 2
-            }}>
-              <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Celulares</Text>
-            </View>
+              <View style={{
+                minHeight: 20,
+                minWidth: 60,
+                padding: 5,
+                backgroundColor: 'white',
+                borderColor: '#dddddd',
+                borderWidth: 1,
+                borderRadius: 2,
+                marginRight: 5
+              }}>
+                <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Hoje</Text>
+              </View>
+              <View style={{
+                minHeight: 20,
+                minWidth: 60,
+                padding: 5,
+                backgroundColor: 'white',
+                borderColor: '#dddddd',
+                borderWidth: 1,
+                borderRadius: 2
+              }}>
+                <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Celulares</Text>
+              </View>
+            </Reaniamted.View>
           </Reaniamted.View>
-        </Reaniamted.View>
-        <ScrollView
-          style={{ marginTop: 5 }}
-          scrollEventThrottle={16}
-          onScroll={(e) => this.scrollY.setValue(e.nativeEvent.contentOffset.y)}
-        >
-          <Sugestoes />
-          <View style={{ margin: 5 }}>
-            <Title>Mais produtos</Title>
-          </View>
+          <ScrollView
+            style={{ marginTop: 5 }}
+            scrollEventThrottle={16}
+            onScroll={(e) => this.scrollY.setValue(e.nativeEvent.contentOffset.y)}
+          >
+            <Sugestoes />
+            <View style={{ margin: 5 }}>
+              <Title>Mais produtos</Title>
+            </View>
 
-          {this.state.produtos.map((item, index) => {
-            return this.renderCard(item, index)
-          })}
+            {this.state.produtos.map((item, index) => {
+              return this.renderCard(item, index)
+            })}
 
-        </ScrollView>
-        <View style={StyleSheet.absoluteFill}
-          pointerEvents={this.state.activeImage ? "auto" : "none"}
-        >
-          <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
-            <Reaniamted.Image
-              style={[{ resizeMode: 'cover' }, activeStyle]}
-              source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
+          </ScrollView>
+          </Reaniamted.View>
+          <View style={StyleSheet.absoluteFill}
+            pointerEvents={this.state.activeImage ? "auto" : "none"}
             >
-            </Reaniamted.Image>
-            <TouchableWithoutFeedback onPress={() => this.closeImage()}>
+            <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
+              <Reaniamted.Image
+                style={[{ resizeMode: 'cover' }, activeStyle]}
+                source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
+              >
+              </Reaniamted.Image>
+              <TouchableWithoutFeedback onPress={() => this.closeImage()}>
 
-              <Reaniamted.View style={[{
-                position: 'absolute',
-                top: 30, left: 30
-              }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
-              </Reaniamted.View>
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, left: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
+                </Reaniamted.View>
 
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
-              <Reaniamted.View style={[{
-                position: 'absolute',
-                top: 30, right: 30
-              }, crossStyle]}>
-                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
-              </Reaniamted.View>
-            </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
+                <Reaniamted.View style={[{
+                  position: 'absolute',
+                  top: 30, right: 30
+                }, crossStyle]}>
+                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
+                </Reaniamted.View>
+              </TouchableWithoutFeedback>
+            </View>
+
+            <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
+              <InfoLoja setscroll={val => {
+                this.scrollYDetails.setValue(val)
+                console.log(val)
+              }} />
+            </Reaniamted.View>
           </View>
+          <RBSheet
+            ref={ref => {
+              this.RBSheet = ref;
+            }}
+            height={height}
+            duration={500}
+            animationType={"fade"}
+            closeOnDragDown={true}
+            customStyles={{
 
-          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
-            <InfoLoja setscroll={val => {
-              this.scrollYDetails.setValue(val)
-              console.log(val)
-            }} />
-          </Reaniamted.View>
-        </View>
-        <RBSheet
-          ref={ref => {
-            this.RBSheet = ref;
-          }}
-          height={height}
-          duration={650}
-          animationType={"fade"}
-          closeOnDragDown={true}
-          customStyles={{
-            container: {
-              justifyContent: "center",
-              alignItems: "center"
-            }
-          }}
-        >
-         <Filtros />
-        </RBSheet>
+            }}
+          >
+            <Filtros close={() => this.RBSheet.close()} />
+          </RBSheet>
       </SafeAreaView>
     );
   }

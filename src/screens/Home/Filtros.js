@@ -1,41 +1,42 @@
 import React from 'react';
 import { View, Dimensions, TouchableNativeFeedback, Text, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 const { height, width } = Dimensions.get("window");
 // import { Container } from './styles';
 
-export default function Filtros() {
+export default function Filtros(props) {
     return (
         <View style={{ flex: 1, backgroundColor: '#fff', flexDirection: 'column' }} >
-            <View>
-
-            </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 0.5, borderTopColor: 'black' }}>
-                <TouchableNativeFeedback >
-                    <View style={[{  backgroundColor: "#e78" },styles.actionbutton]}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between',margin: 5, borderBottomWidth: 0.6, padding: 5, borderTopColor: 'black' }}>
+                <TouchableNativeFeedback onPress={()=> props.close()} >
+                    <View style={[{ backgroundColor: "#e78d97" }, styles.actionbutton]}>
                         <Text style={styles.actionText}>Cancelar</Text>
                     </View>
                 </TouchableNativeFeedback>
-                <TouchableNativeFeedback >
-                    <View style={[{  backgroundColor: '#1691de' },styles.actionbutton]}>
+                <TouchableNativeFeedback onPress={()=> props.close()} >
+                    <View style={[{ elevation: 2 }, styles.actionbutton]}>
                         <Text style={styles.actionText}>Filtrar</Text>
                     </View>
                 </TouchableNativeFeedback>
             </View>
+            <ScrollView >
+
+            </ScrollView>
         </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-    actionbutton :{
-        height: 40, 
-        width: width * 0.4,
+    actionbutton: {
+        height: 40,
+        width: width * 0.45,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center'
     },
     actionText: {
         fontSize: 20,
-        fontWeight: '700'
+        fontWeight: '500'
     }
 })
