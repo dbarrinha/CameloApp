@@ -65,7 +65,7 @@ export default Login = () => {
   })
 
   const goToHome = ()=>{
-    navigate("Home")
+    navigate("App")
   }
 
   useCode(

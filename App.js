@@ -2,7 +2,8 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import createNativeStackNavigator from 'react-native-screens/createNativeStackNavigator';
 import AsyncStorage from '@react-native-community/async-storage';
-import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {
   View,
   ActivityIndicator,
@@ -12,6 +13,7 @@ import { Transition } from 'react-native-reanimated';
 
 import Home from 'screens/Home'
 import Login from 'screens/Login'
+import Configuracoes from 'screens/Configuracoes'
 import { useScreens } from 'react-native-screens';
 useScreens();
 
@@ -50,6 +52,16 @@ const HomeStack = createNativeStackNavigator({
     },
   });
 
+const ConfigStack = createNativeStackNavigator({
+  Config: Configuracoes
+},
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    },
+  });
+
 
 const AuthStack = createNativeStackNavigator({
   Login: Login
@@ -61,11 +73,42 @@ const AuthStack = createNativeStackNavigator({
     },
   });
 
+const TabNavigator = createBottomTabNavigator({
+  Explorar: HomeStack,
+  Perfil: ConfigStack
+},
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        headerMode: 'none',
+      },
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Explorar') {
+          iconName = `search`;
+        } else if (routeName === 'Perfil') {
+          iconName = `perm-identity`;
+        }
+        return <Icon name={iconName} size={30} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'black',
+      labelStyle: {
+        fontSize: 15,
+      },
+    },
+  }
+);
+
+
 const MySwitch = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     AuthStack: AuthStack,
-    HomeStack: HomeStack,
+    App: TabNavigator,
   },
   {
     initialRouteName: 'AuthLoading',
