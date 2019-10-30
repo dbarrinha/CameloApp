@@ -114,6 +114,9 @@ export default class Home extends Component {
     this.dimensionX = new Value(0);
     this.dimensionY = new Value(0);
     this.animation = new Value(0);
+    this.animatedScreenOpacity = new Value(1);
+    this.animatedScreenY = new Value(0);
+    this.animatedContentOpacity = new Value(0);
   }
 
   handleAnimation = (width, height, pageX, pageY) => {
@@ -128,7 +131,10 @@ export default class Home extends Component {
         Reaniamted.timing(this.positionY, { toValue: dPageY, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.dimensionX, { toValue: dWidth, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.dimensionY, { toValue: dHeight, duration: 300, easing: Easing.in }),
-        Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.back() })
+        Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.back() }),
+        Reaniamted.timing(this.animatedScreenY, { toValue: -width, duration: 550, easing: Easing.in }),
+        Reaniamted.timing(this.animatedContentOpacity, { toValue: 1, duration: 300, easing: Easing.in }),
+        Reaniamted.timing(this.animatedScreenOpacity, { toValue: 0, duration: 650, easing: Easing.in }),
       ]).start()
     })
   }
@@ -189,6 +195,9 @@ export default class Home extends Component {
       Reaniamted.timing(this.positionY, { toValue: this.oldPosition.y, duration: 350, easing: Easing.in }),
       Reaniamted.timing(this.dimensionX, { toValue: this.oldPosition.width, duration: 350, easing: Easing.in }),
       Reaniamted.timing(this.dimensionY, { toValue: this.oldPosition.height, duration: 350, easing: Easing.in }),
+      Reaniamted.timing(this.animatedScreenOpacity, { toValue: 1, duration: 650, easing: Easing.in }),
+      Reaniamted.timing(this.animatedScreenY, { toValue: 0, duration: 550, easing: Easing.in }),
+      Reaniamted.timing(this.animatedContentOpacity, { toValue: 0, duration: 300, easing: Easing.in }),
       Reaniamted.timing(this.animation, { toValue: 0, duration: 300, easing: Easing.back() })
     ]).start(() => {
       this.setState({
@@ -203,12 +212,7 @@ export default class Home extends Component {
       width: this.dimensionX,
       height: this.dimensionY,
       left: this.positionX,
-      top: this.positionY,
-      /*opacity: this.animatedHeaderOpacityDetails,
-      transform: [{
-        translateY: this.animatedHeaderYDetails
-      }]*/
-
+      top: this.positionY
     }
 
     const animatedContentY = this.animation.interpolate({
@@ -221,15 +225,9 @@ export default class Home extends Component {
       outputRange: [0, 1, 1]
     })
 
-    const animatedScreenOpacity = this.animation.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [1, 1, 0]
-    })
-
     const contentStyle = {
-      opacity: animatedContentOpacity,
       transform: [{
-        translateY: animatedContentY
+        translateY: animatedContentY,
       }]
     }
 
@@ -239,7 +237,7 @@ export default class Home extends Component {
 
     return (
       <SafeAreaView style={[{ flex: 1, backgroundColor: colors.colorBackground }]}>
-        <Reaniamted.View  style={[{ flex: 1, opacity: animatedScreenOpacity }]}>
+        <Reaniamted.View style={[{ flex: 1, opacity: this.animatedScreenOpacity, transform: [{ translateY: this.animatedScreenY }] }]}>
           <StatusBar backgroundColor={colors.colorBackground} barStyle="dark-content" />
           <Reaniamted.View style={{
             height: this.animatedHeaderHeight,
@@ -322,57 +320,57 @@ export default class Home extends Component {
             })}
 
           </ScrollView>
-          </Reaniamted.View>
-          <View style={StyleSheet.absoluteFill}
-            pointerEvents={this.state.activeImage ? "auto" : "none"}
+        </Reaniamted.View>
+        <View style={StyleSheet.absoluteFill}
+          pointerEvents={this.state.activeImage ? "auto" : "none"}
+        >
+          <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
+            <Reaniamted.Image
+              style={[{ resizeMode: 'cover' }, activeStyle]}
+              source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
             >
-            <View style={{ flex: 1, zIndex: 1001, borderWidth: 0.1 }} ref={this.refContainer}>
-              <Reaniamted.Image
-                style={[{ resizeMode: 'cover' }, activeStyle]}
-                source={this.state.activeImage ? { uri: this.state.activeImage.src } : null}
-              >
-              </Reaniamted.Image>
-              <TouchableWithoutFeedback onPress={() => this.closeImage()}>
+            </Reaniamted.Image>
+            <TouchableWithoutFeedback onPress={() => this.closeImage()}>
 
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, left: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
-                </Reaniamted.View>
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, left: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-arrow-round-back" : "ios-arrow-back"} size={28} />
+              </Reaniamted.View>
 
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
-                <Reaniamted.View style={[{
-                  position: 'absolute',
-                  top: 30, right: 30
-                }, crossStyle]}>
-                  <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
-                </Reaniamted.View>
-              </TouchableWithoutFeedback>
-            </View>
-
-            <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20 }, contentStyle]}>
-              <InfoLoja setscroll={val => {
-                this.scrollYDetails.setValue(val)
-                console.log(val)
-              }} />
-            </Reaniamted.View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={() => alert("Bora tomar uma caraio")}>
+              <Reaniamted.View style={[{
+                position: 'absolute',
+                top: 30, right: 30
+              }, crossStyle]}>
+                <Icon style={{ color: 'white' }} name={Platform.OS === "android" ? "md-heart" : "ios-heart"} size={28} />
+              </Reaniamted.View>
+            </TouchableWithoutFeedback>
           </View>
-          <RBSheet
-            ref={ref => {
-              this.RBSheet = ref;
-            }}
-            height={height}
-            duration={500}
-            animationType={"fade"}
-            closeOnDragDown={true}
-            customStyles={{
 
-            }}
-          >
-            <Filtros close={() => this.RBSheet.close()} />
-          </RBSheet>
+          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20, opacity: this.animatedContentOpacity }, contentStyle]}>
+            <InfoLoja setscroll={val => {
+              this.scrollYDetails.setValue(val)
+              console.log(val)
+            }} />
+          </Reaniamted.View>
+        </View>
+        <RBSheet
+          ref={ref => {
+            this.RBSheet = ref;
+          }}
+          height={height}
+          duration={500}
+          animationType={"fade"}
+          closeOnDragDown={true}
+          customStyles={{
+
+          }}
+        >
+          <Filtros close={() => this.RBSheet.close()} />
+        </RBSheet>
       </SafeAreaView>
     );
   }
