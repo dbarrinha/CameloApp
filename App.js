@@ -7,7 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import {
   View,
   ActivityIndicator,
-  StatusBar
+  StatusBar,
+  
 } from 'react-native';
 import { Transition } from 'react-native-reanimated';
 
@@ -15,6 +16,7 @@ import Home from 'screens/Home'
 import Login from 'screens/Login'
 import Configuracoes from 'screens/Configuracoes'
 import { useScreens } from 'react-native-screens';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 useScreens();
 
 
@@ -92,6 +94,7 @@ const TabNavigator = createBottomTabNavigator({
         }
         return <Icon name={iconName} size={30} color={tintColor} />;
       },
+      //tabBarButtonComponent: TouchableNativeFeedback,
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
