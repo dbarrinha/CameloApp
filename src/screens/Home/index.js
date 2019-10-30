@@ -103,8 +103,6 @@ export default class Home extends Component {
     BackHandler.removeEventListener('hardwareBackPress')
   }
 
-
-
   componentWillMount = () => {
     this.allImages = {}
     this.oldPosition = {}
@@ -132,7 +130,7 @@ export default class Home extends Component {
         Reaniamted.timing(this.dimensionX, { toValue: dWidth, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.dimensionY, { toValue: dHeight, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.back() }),
-        Reaniamted.timing(this.animatedScreenY, { toValue: -width, duration: 550, easing: Easing.in }),
+        Reaniamted.timing(this.animatedScreenY, { toValue: -dHeight, duration: 550, easing: Easing.in }),
         Reaniamted.timing(this.animatedContentOpacity, { toValue: 1, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.animatedScreenOpacity, { toValue: 0, duration: 650, easing: Easing.in }),
       ]).start()
@@ -218,11 +216,6 @@ export default class Home extends Component {
     const animatedContentY = this.animation.interpolate({
       inputRange: [0, 1],
       outputRange: [-150, 0]
-    })
-
-    const animatedContentOpacity = this.animation.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0, 1, 1]
     })
 
     const contentStyle = {
