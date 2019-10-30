@@ -16,7 +16,6 @@ import Home from 'screens/Home'
 import Login from 'screens/Login'
 import Configuracoes from 'screens/Configuracoes'
 import { useScreens } from 'react-native-screens';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 useScreens();
 
 
@@ -101,6 +100,7 @@ const TabNavigator = createBottomTabNavigator({
       inactiveTintColor: 'black',
       labelStyle: {
         fontSize: 15,
+        fontFamily: 'AirbnbCerealBook'
       },
     },
   }

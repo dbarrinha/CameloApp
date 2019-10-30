@@ -8,7 +8,7 @@ export default class Configuracoes extends Component {
     render() {
         return (
             <SafeAreaView >
-                <Text>Config</Text>
+                <Text style={{fontSize: 30, fontFamily: 'AirbnbCerealLight'}}>Config</Text>
             </SafeAreaView>
         );
     }

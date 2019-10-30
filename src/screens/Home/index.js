@@ -283,7 +283,7 @@ export default class Home extends Component {
                 borderRadius: 2,
                 marginRight: 5
               }}>
-                <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center' }}>Hoje</Text>
+                <Text style={{ fontWeight: '700', fontSize: 10, textAlign: 'center', fontFamily: 'AirbnbCerealLight' }}>Hoje</Text>
               </View>
               <View style={{
                 minHeight: 20,

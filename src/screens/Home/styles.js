@@ -42,7 +42,9 @@ export const Thumb = styled.Image.attrs(props => ({
     background-color: white
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+    fontFamily:'AirbnbCereallight'
+})`
     font-size: 18px;
     color: ${colors.colorFont};
     font-weight: bold;
