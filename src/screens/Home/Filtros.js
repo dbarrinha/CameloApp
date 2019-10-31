@@ -14,7 +14,7 @@ export default function Filtros(props) {
                     </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={()=> props.close()} >
-                    <View style={[{ elevation: 2 }, styles.actionbutton]}>
+                    <View style={[{borderWidth: 0.5, marginHorizontal: 5 }, styles.actionbutton]}>
                         <Text style={styles.actionText}>Filtrar</Text>
                     </View>
                 </TouchableNativeFeedback>

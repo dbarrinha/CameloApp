@@ -1,8 +1,8 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator, createta } from 'react-navigation'
 import createNativeStackNavigator from 'react-native-screens/createNativeStackNavigator';
 import AsyncStorage from '@react-native-community/async-storage';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator, createMaterialTopTabNavigator  } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {
   View,
@@ -86,7 +86,7 @@ const AuthStack = createNativeStackNavigator({
     },
   });
 
-const TabNavigator = createBottomTabNavigator({
+const TabNavigator = createMaterialTopTabNavigator({
   Explorar: HomeStack,
   Favoritos:FavoritoStack,
   Perfil: ConfigStack,
@@ -106,17 +106,24 @@ const TabNavigator = createBottomTabNavigator({
         } else if (routeName === 'Favoritos') {
           iconName = `favorite-border`;
         }
-        return <Icon name={iconName} style={{ marginTop: 10 }} size={30} color={tintColor} />;
+        return <Icon name={iconName} size={30}  color={tintColor} />;
       },
     }),
+    tabBarPosition: 'bottom',
+    swipeEnabled: true,
     tabBarOptions: {
       activeTintColor: 'tomato',
+      showIcon : true,
       inactiveTintColor: 'black',
-      labelStyle: {
-        fontSize: 15,
-        fontFamily: 'AirbnbCerealBook'
+      iconStyle :{
+        width: 30
       },
-      keyboardHidesTabBar : false
+      style:{
+        backgroundColor: '#fff',
+      },
+      indicatorStyle:{
+        height:0
+      }
     },
   }
 );
@@ -127,19 +134,6 @@ const MySwitch = createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     AuthStack: AuthStack,
     App: TabNavigator,
-  },
-  {
-    initialRouteName: 'AuthLoading',
-    transition: (
-      <Transition.Together>
-        <Transition.Out
-          type="slide-bottom"
-          durationMs={400}
-          interpolation="easeIn"
-        />
-        <Transition.In type="fade" durationMs={500} />
-      </Transition.Together>
-    ),
   }
 );
 
