@@ -64,7 +64,7 @@ export default Login = () => {
     extrapolate: Extrapolate.CLAMP
   })
 
-  const goToHome = ()=>{
+  const goToHome = () => {
     navigate("App")
   }
 
@@ -78,7 +78,7 @@ export default Login = () => {
       set(buttonOpacity, runTiming(new Clock(), 0, 1))
     ), [animationState])
 
-  
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white', justifyContent: 'flex-end' }}>
       <Animated.View style={[StyleSheet.absoluteFill, { transform: [{ translateY: bgY }], flex: 1 }]}>
@@ -103,9 +103,9 @@ export default Login = () => {
               </Text>
           </Animated.View>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={()=>goToHome()}>
+        <TouchableWithoutFeedback onPress={() => goToHome()}>
           <Animated.View
-            
+
             style={[styles.button,
             {
               backgroundColor: '#2e71dc',
@@ -119,21 +119,21 @@ export default Login = () => {
               </Text>
           </Animated.View>
         </TouchableWithoutFeedback>
-        
+
         <Animated.View
           style={[StyleSheet.absoluteFill,
           {
             zIndex: textInputZindex,
             opacity: textInputOpacity,
             transform: [{ translateY: textInputY }],
-            height: height / 3 ,
+            height: height / 3,
             top: null,
             justifyContent: "center",
           }
           ]}
         >
           <TouchableWithoutFeedback onPress={() => animationState.setValue(2)}>
-            <Animated.View style={styles.closeButton} >
+            <Animated.View hitSlop={{ top: 1, bottom: 1, left: 1, right: 1 }} style={styles.closeButton} >
               <Animated.Text style={{
                 fontSize: 20,
                 fontWeight: 'bold',
@@ -145,13 +145,16 @@ export default Login = () => {
             placeholder="Email"
             style={styles.textinput}
             placeholderTextColor="black"
+            onSubmitEditing={() => this.senha.focus()}
           />
           <TextInput
+            ref={ref => this.senha = ref}
             placeholder="Senha"
             style={styles.textinput}
             placeholderTextColor="black"
+            onSubmitEditing={() => console.log("teste")}
           />
-          <Animated.View  style={[styles.button, { elevation: 5, marginTop: 5 }]}>
+          <Animated.View style={[styles.button, { elevation: 5, marginTop: 5 }]}>
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}> SIGN IN</Text>
           </Animated.View>
         </Animated.View>

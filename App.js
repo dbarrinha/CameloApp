@@ -8,14 +8,16 @@ import {
   View,
   ActivityIndicator,
   StatusBar,
-  
+
 } from 'react-native';
 import { Transition } from 'react-native-reanimated';
 
 import Home from 'screens/Home'
 import Login from 'screens/Login'
 import Configuracoes from 'screens/Configuracoes'
+import Favoritos from 'screens/Favoritos'
 import { useScreens } from 'react-native-screens';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 useScreens();
 
 
@@ -63,6 +65,16 @@ const ConfigStack = createNativeStackNavigator({
     },
   });
 
+const FavoritoStack = createNativeStackNavigator({
+  Favoritos: Favoritos
+},
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    },
+  });
+
 
 const AuthStack = createNativeStackNavigator({
   Login: Login
@@ -76,7 +88,8 @@ const AuthStack = createNativeStackNavigator({
 
 const TabNavigator = createBottomTabNavigator({
   Explorar: HomeStack,
-  Perfil: ConfigStack
+  Favoritos:FavoritoStack,
+  Perfil: ConfigStack,
 },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -90,10 +103,11 @@ const TabNavigator = createBottomTabNavigator({
           iconName = `search`;
         } else if (routeName === 'Perfil') {
           iconName = `perm-identity`;
+        } else if (routeName === 'Favoritos') {
+          iconName = `favorite-border`;
         }
-        return <Icon name={iconName} size={30} color={tintColor} />;
+        return <Icon name={iconName} style={{ marginTop: 10 }} size={30} color={tintColor} />;
       },
-      //tabBarButtonComponent: TouchableNativeFeedback,
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
@@ -102,6 +116,7 @@ const TabNavigator = createBottomTabNavigator({
         fontSize: 15,
         fontFamily: 'AirbnbCerealBook'
       },
+      keyboardHidesTabBar : false
     },
   }
 );

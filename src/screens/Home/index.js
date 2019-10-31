@@ -130,7 +130,7 @@ export default class Home extends Component {
         Reaniamted.timing(this.dimensionX, { toValue: dWidth, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.dimensionY, { toValue: dHeight, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.animation, { toValue: 1, duration: 300, easing: Easing.back() }),
-        Reaniamted.timing(this.animatedScreenY, { toValue: -dHeight, duration: 550, easing: Easing.in }),
+        Reaniamted.timing(this.animatedScreenY, { toValue: -dHeight, duration: 450, easing: Easing.in }),
         Reaniamted.timing(this.animatedContentOpacity, { toValue: 1, duration: 300, easing: Easing.in }),
         Reaniamted.timing(this.animatedScreenOpacity, { toValue: 0, duration: 650, easing: Easing.in }),
       ]).start()
@@ -194,7 +194,7 @@ export default class Home extends Component {
       Reaniamted.timing(this.dimensionX, { toValue: this.oldPosition.width, duration: 350, easing: Easing.in }),
       Reaniamted.timing(this.dimensionY, { toValue: this.oldPosition.height, duration: 350, easing: Easing.in }),
       Reaniamted.timing(this.animatedScreenOpacity, { toValue: 1, duration: 650, easing: Easing.in }),
-      Reaniamted.timing(this.animatedScreenY, { toValue: 0, duration: 550, easing: Easing.in }),
+      Reaniamted.timing(this.animatedScreenY, { toValue: 0, duration: 450, easing: Easing.in }),
       Reaniamted.timing(this.animatedContentOpacity, { toValue: 0, duration: 300, easing: Easing.in }),
       Reaniamted.timing(this.animation, { toValue: 0, duration: 300, easing: Easing.back() })
     ]).start(() => {
@@ -343,7 +343,7 @@ export default class Home extends Component {
             </TouchableWithoutFeedback>
           </View>
 
-          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', padding: 20, opacity: this.animatedContentOpacity }, contentStyle]}>
+          <Reaniamted.View style={[{ flex: 1, zIndex: 1000, backgroundColor: 'white', paddingHorizontal: 20, paddingTop: 20, opacity: this.animatedContentOpacity }, contentStyle]}>
             <InfoLoja setscroll={val => {
               this.scrollYDetails.setValue(val)
               console.log(val)
