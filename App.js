@@ -116,8 +116,11 @@ const TabNavigator = createMaterialTopTabNavigator({
       activeTintColor: 'tomato',
       showIcon : true,
       inactiveTintColor: 'black',
+      labelStyle:{
+        fontFamily: 'AirbnbCerealMedium'
+      },
       iconStyle :{
-        width: 22,
+        width: 25,
         height: 15
       },
       style:{
