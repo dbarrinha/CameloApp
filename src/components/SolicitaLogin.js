@@ -10,7 +10,7 @@ const { height, width } = Dimensions.get('window')
 
 export default function SolicitaLogin(props) {
     return (
-        <View style={{ flex: 1 }}>
+        <View >
             
             <Text style={{ color: colors.colorFont, fontSize: 18, fontFamily: 'AirbnbCerealLight' }}
             >
