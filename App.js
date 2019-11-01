@@ -4,6 +4,7 @@ import createNativeStackNavigator from 'react-native-screens/createNativeStackNa
 import AsyncStorage from '@react-native-community/async-storage';
 import { createBottomTabNavigator, createMaterialTopTabNavigator  } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import {
   View,
   ActivityIndicator,
@@ -100,13 +101,13 @@ const TabNavigator = createMaterialTopTabNavigator({
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Explorar') {
-          iconName = `search`;
+          iconName = `magnifier`;
         } else if (routeName === 'Perfil') {
-          iconName = `perm-identity`;
+          iconName = `user`;
         } else if (routeName === 'Favoritos') {
-          iconName = `favorite-border`;
+          iconName = `heart`;
         }
-        return <Icon name={iconName} size={30}  color={tintColor} />;
+        return <SimpleLineIcons name={iconName} size={22}  color={tintColor} />;
       },
     }),
     tabBarPosition: 'bottom',
@@ -116,10 +117,13 @@ const TabNavigator = createMaterialTopTabNavigator({
       showIcon : true,
       inactiveTintColor: 'black',
       iconStyle :{
-        width: 30
+        width: 22,
+        height: 15
       },
       style:{
         backgroundColor: '#fff',
+        padding:0,
+        margin: 0
       },
       indicatorStyle:{
         height:0

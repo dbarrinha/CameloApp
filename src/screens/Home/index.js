@@ -354,7 +354,7 @@ export default class Home extends Component {
           ref={ref => {
             this.RBSheet = ref;
           }}
-          height={height}
+          height={height-100}
           duration={500}
           animationType={"fade"}
           closeOnDragDown={true}
