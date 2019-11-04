@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, SafeAreaView, Text } from 'react-native';
 import { colors } from 'config/colors';
 import SolicitaLogin from 'components/SolicitaLogin'
-// import { Container } from './styles';
+import DadosUser from './DadosUser'
 
 export default class Configuracoes extends Component {
     render() {
