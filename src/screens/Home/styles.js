@@ -12,7 +12,9 @@ export const CardInfo = styled.View`
     justify-content: flex-start;
 `;
 
-export const Card = styled.View`
+export const Card = styled.View.attrs(props => ({
+    needsOffscreenAlphaCompositing: true
+}))`
     flex: 1;
     height:${width / 4};
     flex-direction: row;
@@ -42,9 +44,9 @@ export const Thumb = styled.Image.attrs(props => ({
     background-color: white
 `;
 
-export const Title = styled.Text.attrs({
-    fontFamily:'AirbnbCereallight'
-})`
+export const Title = styled.Text.attrs( props => ({
+    fontFamily:'AirbnbCerealBold'
+}))`
     font-size: 18px;
     color: ${colors.colorFont};
     font-weight: bold;

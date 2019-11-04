@@ -14,6 +14,7 @@ import Filtros from './Filtros';
 import InfoLoja from '../../components/InfoLoja';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import RBSheet from "react-native-raw-bottom-sheet";
 const {
   Value,
@@ -180,7 +181,13 @@ export default class Home extends Component {
                 30 setembro 13:10, Centro
           </TextFooter>
             </CardInfo>
+            {true ?
+              <MaterialIcons style={{ position: 'absolute', top: 20, right: 20 }} color={"red"} name={"favorite"} size={19} />
+              :
+              <MaterialIcons style={{ position: 'absolute', top: 20, right: 20 }} color={"#5c5a5a"} name={"favorite-border"} size={19} />
+            }
           </Card>
+
         </Animated.View>
       </TouchableWithoutFeedback>
     )
@@ -354,7 +361,7 @@ export default class Home extends Component {
           ref={ref => {
             this.RBSheet = ref;
           }}
-          height={height-100}
+          height={height - 100}
           duration={500}
           animationType={"fade"}
           closeOnDragDown={true}

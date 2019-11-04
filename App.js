@@ -17,6 +17,7 @@ import Home from 'screens/Home'
 import Login from 'screens/Login'
 import Configuracoes from 'screens/Configuracoes'
 import Favoritos from 'screens/Favoritos'
+import Detalhes from 'screens/Detalhes'
 import { useScreens } from 'react-native-screens';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 useScreens();
@@ -67,7 +68,8 @@ const ConfigStack = createNativeStackNavigator({
   });
 
 const FavoritoStack = createNativeStackNavigator({
-  Favoritos: Favoritos
+  Favoritos: Favoritos,
+  Detalhes: Detalhes
 },
   {
     headerMode: 'none',
